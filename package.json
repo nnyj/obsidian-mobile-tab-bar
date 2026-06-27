@@ -1,6 +1,6 @@
 {
   "name": "obsidian-mobile-tab-bar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Browser-style tab bar for switching between open notes on Obsidian mobile.",
   "main": "main.js",
   "type": "module",
