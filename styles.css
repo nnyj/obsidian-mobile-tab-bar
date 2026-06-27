@@ -1,0 +1,41 @@
+.mtb-hidden { display: none !important; }
+.mtb-save-dot { font-size: 8px; margin-left: 4px; vertical-align: middle; display: none; }
+.mtb-save-dot::before { content: '●'; }
+.mtb-save-ok { display: inline; color: #32cd32; }
+.mtb-save-pending { display: inline; color: #ff4444; }
+
+.mtb-tab-bar {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin: 0;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 100px;
+}
+.mtb-tab-bar::-webkit-scrollbar { display: none; }
+
+.mtb-tab {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  user-select: none;
+  -webkit-user-select: none;
+  flex-shrink: 0;
+  border-radius: 100px;
+  background: transparent;
+  border: 1px solid var(--background-modifier-border);
+}
+.mtb-tab-active {
+  color: var(--text-normal);
+  background: var(--background-modifier-border);
+  border-color: transparent;
+}
