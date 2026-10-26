@@ -14,6 +14,9 @@ jobs:
       attestations: write
     steps:
       - uses: actions/checkout@v6
+        with:
+          # full history and tags, the release notes list commits since the previous tag
+          fetch-depth: 0
 
       - name: Use Node.js
         uses: actions/setup-node@v6
@@ -38,7 +41,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tag="${GITHUB_REF#refs/tags/}"
+          prev=$(git describe --tags --abbrev=0 "$tag^" 2>/dev/null || true)
+          notes=$(printf "## What's Changed\n%s" "$(git log --format='* %s' ${prev:+$prev..}$tag)")
           gh release create "$tag" \
             --title="$tag" \
             --draft \
+            --notes "$notes" \
+            --generate-notes \
             main.js manifest.json styles.css
