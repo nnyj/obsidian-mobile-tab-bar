@@ -6,8 +6,8 @@ export default class MobileTabBar extends Plugin {
   }
 
   private setupTabBar() {
-    const bar = createEl('div', { cls: 'mtb-tab-bar' });
-    const dot = createEl('span', { cls: 'mtb-save-dot' });
+    const bar = createDiv({ cls: 'mtb-tab-bar' });
+    const dot = createSpan({ cls: 'mtb-save-dot' });
     let longPressTimer: number | null = null;
 
     const cancelLongPress = () => {
@@ -63,7 +63,7 @@ export default class MobileTabBar extends Plugin {
       for (const leaf of leaves) {
         const name = getLeafName(leaf);
         if (!name) continue;
-        const tab = createEl('span', { cls: 'mtb-tab', text: name });
+        const tab = createSpan({ cls: 'mtb-tab', text: name });
         if (leaf === active) {
           tab.addClass('mtb-tab-active');
           tab.appendChild(dot);
@@ -97,8 +97,9 @@ export default class MobileTabBar extends Plugin {
       const view = this.app.workspace.getActiveViewOfType(FileView);
       if (!view) return;
       const container = view.containerEl;
-      const titleContainer = container.querySelector('.view-header-title-container');
+      const titleContainer = container.querySelector<HTMLElement>('.view-header-title-container');
       if (titleContainer) {
+        titleContainer.hide();
         titleContainer.classList.add('mtb-hidden');
         const header = container.querySelector('.view-header');
         if (header && !header.contains(bar)) {
@@ -135,7 +136,10 @@ export default class MobileTabBar extends Plugin {
     this.register(() => {
       obs.disconnect();
       bar.remove();
-      activeDocument.querySelectorAll('.mtb-hidden').forEach(el => el.classList.remove('mtb-hidden'));
+      activeDocument.querySelectorAll<HTMLElement>('.mtb-hidden').forEach(el => {
+        el.show();
+        el.classList.remove('mtb-hidden');
+      });
     });
   }
 }
