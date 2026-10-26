@@ -1,7 +1,7 @@
 {
 	"id": "mobile-tab-bar",
 	"name": "Mobile Tab Bar",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"minAppVersion": "1.0.0",
 	"description": "Browser-style tab bar for switching between open notes on mobile.",
 	"author": "nnyj",

@@ -1,8 +1,4 @@
-import { Plugin, MarkdownView, Platform, WorkspaceLeaf, type ViewState } from 'obsidian';
-
-interface FileView {
-  file?: { path: string; basename: string };
-}
+import { Plugin, FileView, Platform, WorkspaceLeaf, type ViewState } from 'obsidian';
 
 export default class MobileTabBar extends Plugin {
   onload() {
@@ -22,15 +18,13 @@ export default class MobileTabBar extends Plugin {
     };
 
     const getLeafPath = (leaf: WorkspaceLeaf): string | undefined => {
-      const file = (leaf.view as unknown as FileView).file;
-      if (file) return file.path;
+      if (leaf.view instanceof FileView && leaf.view.file) return leaf.view.file.path;
       const state = leaf.getViewState()?.state as ViewState | undefined;
       return (state as Record<string, unknown> | undefined)?.file as string | undefined;
     };
 
     const getLeafName = (leaf: WorkspaceLeaf): string | undefined => {
-      const file = (leaf.view as unknown as FileView).file;
-      if (file) return file.basename;
+      if (leaf.view instanceof FileView && leaf.view.file) return leaf.view.file.basename;
       const path = getLeafPath(leaf);
       return path ? path.split('/').pop()?.replace(/\.md$/, '') : undefined;
     };
@@ -100,7 +94,7 @@ export default class MobileTabBar extends Plugin {
     };
 
     const attachBar = () => {
-      const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+      const view = this.app.workspace.getActiveViewOfType(FileView);
       if (!view) return;
       const container = view.containerEl;
       const titleContainer = container.querySelector('.view-header-title-container');
